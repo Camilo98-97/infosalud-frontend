@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Historia Clinica</title>
+    <link rel="stylesheet" href="styleclinica.css" />
+  </head>
+  <body>
+    <header>
+      <div>
+        <h1>Bienvenido, Camilo</h1>
+        <p>Jueves, 26 septiembre 2024</p>
+      </div>
+      <button class="profile-button">CC</button>
+    </header>
+
+    <form>
+      <label for="Fecha">Fecha</label>
+      <input type="date" name="fecha" value="2025-03-30" />
+
+      <label for="Especialista">Especialista</label>
+      <select name="Especialista">
+        <option disabled selected>Seleccione una especialidad</option>
+        <option class="opciones-especialidad" value="Cardiología">
+          Cardiología
+        </option>
+        <option class="opciones-especialidad" value="Neurología">
+          Neurología
+        </option>
+        <option class="opciones-especialidad" value="Pediatría">
+          Pediatría
+        </option>
+        <option class="opciones-especialidad" value="Ortopedia">
+          Ortopedia
+        </option>
+      </select>
+
+      <button type="button">Buscar</button>
+    </form>
+  </body>
+</html>
