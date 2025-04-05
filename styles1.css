@@ -135,7 +135,3 @@ p {
     margin-bottom: 10px;
 }
 
-/* Para el icono de información (necesitas Font Awesome o similar) */
-.fa-info-circle::before {
-    content: "\f05a"; /* Código del icono de información de Font Awesome */
-}
