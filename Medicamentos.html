@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Medicamentos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f1e5e5;
+    }
+
+    .header {
+      width: 1205px;
+      height: 90px;
+      background-color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      margin: 0;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      border-radius: 8px;
+      border-left: 1px solid #ccc; /* Puedes cambiar el color si Figma especifica otro */
+      position: relative; /* o absolute, si se necesita */
+      left: 235px;
+      
+    }
+
+    .welcome-text h2 {
+      margin: 0;
+      font-size: 24px;
+      color: #2d2f48;
+    }
+
+    .welcome-text p {
+      margin: 4px 0 0 0;
+      color: #999;
+      font-size: 14px;
+    }
+
+    .user-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background-color: #5c6e9f;
+      color: white;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      
+    }
+    table {
+      width: 1136px;
+      height: 277px;
+      border-collapse: separate;
+      border-spacing: 0 2px;
+      margin-top: 20px;
+      padding: 20px 10px;
+      background-color: white;
+      border-radius: 5px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      z-index: 1;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+      color: #333;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    th {
+      background-color: #f8f8f8;
+      color: rgb(0, 0, 0);
+      border-bottom: 1px solid #555;
+    }
+    .cancel-button {
+      background-color: rgb(247, 247, 247);
+      color: #ff5252;
+      border: 2px solid #ff5252;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .cancel-button:disabled {
+      background-color: white;
+      opacity: 0.5;
+      cursor: default;
+    }
+    .modal-button {
+      width: 269.5px;
+      height: 43px;
+      background-color: #58719D;
+      color: white;
+      border: 1px solid #58719D;
+      padding: 5px 15px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 500;
+      border-radius: 10px;
+      position: absolute;
+      top: 129px;
+      left: 264px;
+      z-index: 10;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: white;
+      width: 400px;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      margin-bottom: 12px;
+    }
+    .form-group label {
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 4px;
+    }
+    .form-group input {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+    .file-input {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 10px;
+      background: #f9f9f9;
+    }
+    .file-input span {
+      font-size: 14px;
+      color: #333;
+    }
+    .file-input button {
+      background: #e0e0e0;
+      border: none;
+      padding: 6px 12px;
+      font-size: 14px;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+    .button-group {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+    .button {
+      width: 48%;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+      border: none;
+    }
+    .cancel-button-modal {
+      background-color: white;
+      border: 1px solid #3f5a99;
+      color: #3f5a99;
+    }
+    .submit-button {
+      background-color: #3f5a99;
+      color: white;
+    }
+    .pagination-container{
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 12px;
+      margin-top: 16px;
+      font-size: 10px;
+      color: #555;
+      width: 1136px;
+    }
+    .pagination-container select {
+      font-size: 12px; 
+      padding: 2px 4px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: white;
+      cursor: pointer;
+    }
+    .pagination-info {
+      color: #333;
+    }
+
+    .pagination-button {
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      font-size: 18px;
+      color: #333;
+      padding: 4px 8px;
+    }
+
+    .pagination-button:hover {
+      background-color: #f0f0f0;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="welcome-text">
+      <h2>Bienvenido, Camilo</h2>
+      <p>Jueves, 26 septiembre 2024</p>
+    </div>
+    <div class="user-avatar">CC</div>
+  </div>
+
+  <button class="modal-button" onclick="abrirModal()">Reclamar Medicamentos</button>
+
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <h2>Solicitar Medicamento</h2>
+      <p>En esta sección podrás asignar tu cita médica con nuestros especialistas.</p>
+
+      <div class="form-group">
+        <label>Medicamento:</label>
+        <input type="text" id="medicamento" placeholder="Ejemplo: Acetaminofén">
+      </div>
+
+      <div class="form-group">
+        <label>Orden médica:</label>
+        <div class="file-input">
+          <span id="file-name">Adjuntar archivo</span>
+          <button onclick="document.getElementById('ordenMedica').click()">Adjuntar</button>
+        </div>
+        <input type="file" id="ordenMedica" style="display: none" onchange="updateFileName()">
+      </div>
+
+      <div class="form-group">
+        <label>Fecha de entrega:</label>
+        <input type="date" id="fechaEntrega">
+      </div>
+
+      <div class="form-group">
+        <label>Dirección:</label>
+        <input type="text" id="direccion" placeholder="Ejemplo: Carrera 15 #74-43">
+      </div>
+
+      <div class="button-group">
+        <button class="button cancel-button-modal" onclick="cerrarModal()">Cancelar</button>
+        <button class="button submit-button" onclick="solicitarMedicamento()">Solicitar</button>
+      </div>
+    </div>
+  </div>
+
+  
+  <table>
+    <thead>
+      <tr>
+        <th>Referencia</th>
+        <th>Nombre de Medicamento</th>
+        <th>Cantidad</th>
+        <th>Estado</th>
+        <th>Opciones</th>
+      </tr>
+    </thead>
+    <tbody id="medicamentos">
+      <tr>
+        <td>369857412</td>
+        <td>Omeprazol</td>
+        <td>5</td>
+        <td class="estado">En proceso</td>
+        <td><button class="cancel-button" onclick="cancelarPedido(this)">Cancelar orden</button></td>
+      </tr>
+      <tr>
+        <td>400569871</td>
+        <td>Acetaminofén</td>
+        <td>10</td>
+        <td class="estado">Cancelado</td>
+        <td><button class="cancel-button" disabled>Cancelar orden</button></td>
+      </tr>
+      <tr>
+        <td>403568712</td>
+        <td>Vitamina C</td>
+        <td>3</td>
+        <td class="estado">Entregado</td>
+        <td><button class="cancel-button" disabled>Cancelar orden</button></td>
+      </tr>
+    </tbody>
+
+    <tfoot>
+      <tr>
+        <td colspan="5">
+          <div class="pagination-container">
+            <span>Items per page:</span>
+            <select>
+              <option>5</option>
+              <option>10</option>
+              <option>25</option>
+              <option>50</option>
+            </select>
+  
+            <span class="pagination-info">1 of 50</span>
+  
+            <button class="pagination-button">‹</button>
+            <button class="pagination-button">›</button>
+          </div>
+        </td>
+      </tr>
+    </tfoot>
+
+  </table>
+
+  
+
+  <script>
+    function cancelarPedido(button) {
+      let confirmacion = confirm("¿Está seguro de cancelar la orden?");
+      if (confirmacion) {
+        let fila = button.parentElement.parentElement;
+        let estadoCelda = fila.querySelector(".estado");
+        estadoCelda.textContent = "Cancelado";
+        button.disabled = true;
+      }
+    }
+
+    function abrirModal() {
+      document.getElementById("modal").style.display = "flex";
+    }
+
+    function cerrarModal() {
+      document.getElementById("modal").style.display = "none";
+    }
+
+    function solicitarMedicamento() {
+      const nombre = document.getElementById("medicamento").value.trim();
+      const fecha = document.getElementById("fechaEntrega").value.trim();
+      const direccion = document.getElementById("direccion").value.trim();
+
+      if (!nombre || !fecha || !direccion) {
+        alert("Por favor, completa todos los campos.");
+        return;
+      }
+
+      const referencia = Math.floor(100000000 + Math.random() * 900000000); // Generar referencia aleatoria
+      const nuevaFila = document.createElement("tr");
+      nuevaFila.innerHTML = `
+        <td>${referencia}</td>
+        <td>${nombre}</td>
+        <td>1</td>
+        <td class="estado">En proceso</td>
+        <td><button class="cancel-button" onclick="cancelarPedido(this)">Cancelar orden</button></td>
+      `;
+
+      document.getElementById("medicamentos").appendChild(nuevaFila);
+
+      // Limpiar campos y cerrar modal
+      document.getElementById("medicamento").value = "";
+      document.getElementById("fechaEntrega").value = "";
+      document.getElementById("direccion").value = "";
+      document.getElementById("file-name").textContent = "Adjuntar archivo";
+      document.getElementById("ordenMedica").value = "";
+
+      cerrarModal();
+      alert("Solicitud enviada con éxito.");
+    }
+
+    function updateFileName() {
+      const input = document.getElementById("ordenMedica");
+      document.getElementById("file-name").textContent = input.files[0]?.name || "Adjuntar archivo";
+    }
+  </script>
+
+</body>
+</html>
