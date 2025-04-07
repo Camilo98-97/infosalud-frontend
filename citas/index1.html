@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendar y Modificar Cita</title>
+    <link rel="stylesheet" href="styles1.css">
+</head>
+<body>
+    <div class="container">
+        <div class="appointment-section">
+            <h2>Agendar cita</h2>
+            <p>En esta sección podrás agendar tu cita médica con nuestros especialistas.</p>
+            <div class="form-group">
+                <label for="location-new">Sede</label>
+                <select id="location-new">
+                    <option>Los Nogales</option>
+                    </select>
+            </div>
+            <div class="form-group">
+                <label for="date-new">Fecha</label>
+                <input type="date" id="date-new" value="15/10/2024">
+            </div>
+            <div class="form-group">
+                <label for="specialty-new">Especialidad</label>
+                <select id="specialty-new">
+                    <option>Cardiología</option>
+                    </select>
+            </div>
+            <div class="form-group">
+                <label for="doctor-new">Médico</label>
+                <input type="text" id="doctor-new" value="Clara Martínez" readonly>
+            </div>
+            <div class="form-group">
+                <label for="time-new">Hora</label>
+                <select id="time-new">
+                    <option>3:00 pm</option>
+                    </select>
+            </div>
+            <div class="buttons">
+                <button class="cancel-button">Cancelar</button>
+                <button class="submit-button">Agendar</button>
+            </div>
+        </div>
+
+        <div class="modify-section">
+            <h2>Modificar cita</h2>
+            <p>En esta sección podrás modificar tu cita médica con nuestros especialistas.</p>
+            <div class="form-group">
+                <label for="location-edit">Sede</label>
+                <select id="location-edit">
+                    <option>Los Nogales</option>
+                    </select>
+            </div>
+            <div class="form-group">
+                <label for="date-edit">Fecha</label>
+                <input type="date" id="date-edit" value="15/10/2024">
+            </div>
+            <div class="form-group">
+                <label for="specialty-edit">Especialidad</label>
+                <select id="specialty-edit">
+                    <option>Cardiología</option>
+                    </select>
+            </div>
+            <div class="form-group">
+                <label for="doctor-edit">Médico</label>
+                <input type="text" id="doctor-edit" value="Clara Martínez" readonly>
+            </div>
+            <div class="form-group">
+                <label for="time-edit">Hora</label>
+                <select id="time-edit">
+                    <option>3:00 pm</option>
+                    </select>
+            </div>
+            <div class="buttons">
+                <button class="cancel-button">Cancelar</button>
+                <button class="save-button">Guardar</button>
+            </div>
+        </div>
+
+        <div class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="info-icon">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p>¿Está seguro que desea cancelar la cita médico?</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="delete-button">Eliminar</button>
+                    <button class="modal-cancel-button">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+   </body>
+</html>
