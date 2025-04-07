@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin</title>
+  <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+  <div class="header">
+    <div class="welcome-text">
+      <h2>Bienvenido, Camilo</h2>
+      <p>Jueves, 26 septiembre 2024</p>
+    </div>
+    <div class="user-avatar">CC</div>
+  </div>
+
+  <div class="contenido">
+    <table>
+      <thead>
+        <tr>
+          <th>Referencia</th>
+          <th>Nombre de Medicamento</th>
+          <th>Cantidad</th>
+          <th>Estado</th>
+          <th>Opciones</th>
+        </tr>
+      </thead>
+      <tbody id="medicamentos">
+        <tr>
+          <td>369857412</td>
+          <td>Omeprazol</td>
+          <td>5</td>
+          <td class="estado">En proceso</td>
+          <td class="opciones">
+            <button class="btn-aprobar">Aprobar</button>
+            <button class="btn-entregar">Entregar</button>
+            <button class="btn-denegar">Denegado</button>
+          </td>
+        </tr>
+        <tr>
+          <td>400569871</td>
+          <td>Acetaminofén</td>
+          <td>10</td>
+          <td class="estado">En proceso</td>
+          <td class="opciones">
+            <button class="btn-aprobar">Aprobar</button>
+            <button class="btn-entregar">Entregar</button>
+            <button class="btn-denegar">Denegado</button>
+          </td>
+        </tr>
+        <tr>
+          <td>403568712</td>
+          <td>Vitamina C</td>
+          <td>3</td>
+          <td class="estado">En proceso</td>
+          <td class="opciones">
+            <button class="btn-aprobar">Aprobar</button>
+            <button class="btn-entregar">Entregar</button>
+            <button class="btn-denegar">Denegado</button>
+          </td>
+        </tr>
+      </tbody>
+
+      <tfoot>
+        <tr>
+          <td colspan="5">
+            <div class="pagination-container">
+              <span>Items per page:</span>
+              <select>
+                <option>5</option>
+                <option>10</option>
+                <option>25</option>
+                <option>50</option>
+              </select>
+
+              <span class="pagination-info">1 of 50</span>
+
+              <button class="pagination-button">‹</button>
+              <button class="pagination-button">›</button>
+            </div>
+          </td>
+        </tr>
+      </tfoot>
+
+    </table>
+  </div>
+  <div id="modalConfirmacion" class="modal">
+    <div class="modal-content">
+      <div class="info-circle">
+        <span>i</span>
+      </div>
+      <p id="mensajeConfirmacion" style="margin-top: 15px;">¿Está seguro?</p>
+      <div class="button-group">
+        <button class="button submit-button" id="btnConfirmarAccion">Confirmar</button>
+        <button class="button cancel-button-modal" id="btnCancelarModal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    function solicitarMedicamento() {
+      const tbody = document.getElementById("medicamentos");
+
+      const codigo = Math.floor(100000000 + Math.random() * 900000000);
+      const nombre = prompt("Nombre del medicamento:");
+      const cantidad = prompt("Cantidad:");
+      const estado = "En proceso";
+
+      if (!nombre || !cantidad) return;
+
+      const nuevaFila = document.createElement("tr");
+
+      nuevaFila.innerHTML = `
+        <td>${codigo}</td>
+        <td>${nombre}</td>
+        <td>${cantidad}</td>
+        <td class="estado">${estado}</td>
+        <td class="opciones">
+          <button class="btn-aprobar">Aprobar</button>
+          <button class="btn-entregar">Entregar</button>
+          <button class="btn-denegar">Denegar</button>
+        </td>
+      `;
+
+      tbody.appendChild(nuevaFila);
+    }
+
+    let accionActual = ""; 
+    let botonAccionado = null; 
+
+    
+    function mostrarModal(accion, boton) {
+      accionActual = accion;
+      botonAccionado = boton;
+
+      const modal = document.getElementById("modalConfirmacion");
+      const mensaje = document.getElementById("mensajeConfirmacion");
+      const botonConfirmar = document.getElementById("btnConfirmarAccion");
+
+      mensaje.innerHTML = `¿Está seguro de <strong>${accion.toLowerCase()}</strong> este medicamento?`;
+      botonConfirmar.textContent = accion;
+      modal.style.display = "flex";
+    }
+
+    
+    function cerrarModal() {
+      const modal = document.getElementById("modalConfirmacion");
+      modal.style.display = "none";
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      
+      document.querySelectorAll(".btn-aprobar, .btn-entregar, .btn-denegar").forEach((boton) => {
+        boton.addEventListener("click", function () {
+          const clase = this.classList;
+          if (clase.contains("btn-aprobar")) mostrarModal("Aprobar", this);
+          else if (clase.contains("btn-entregar")) mostrarModal("Entregar", this);
+          else if (clase.contains("btn-denegar")) mostrarModal("Denegar", this);
+        });
+      });
+
+      document.getElementById("btnConfirmarAccion").addEventListener("click", function () {
+        if (botonAccionado) {
+          const fila = botonAccionado.closest("tr");
+          const estadoCelda = fila.querySelector(".estado");
+          const opcionesCelda = fila.querySelector(".opciones");
+
+          
+          let estadoFormateado = "";
+          if (accionActual === "Aprobar") {
+            estadoFormateado = "Aprobado";
+          } else if (accionActual === "Entregar") {
+            estadoFormateado = "Entregado";
+          } else if (accionActual === "Denegar") {
+            estadoFormateado = "Denegado";
+          }
+          estadoCelda.textContent = estadoFormateado;
+
+          
+          opcionesCelda.innerHTML = "";
+
+          
+          const boton = document.createElement("button");
+          boton.textContent = accionActual;
+          boton.disabled = true;
+
+          if (accionActual === "Aprobar") {
+            boton.className = "btn-aprobar";
+          } else if (accionActual === "Entregar") {
+            boton.className = "btn-entregar";
+          } else if (accionActual === "Denegar") {
+            boton.className = "btn-denegar";
+          }
+
+          opcionesCelda.appendChild(boton);
+        }
+
+        cerrarModal();
+
+      });
+    });
+
+
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Medicamentos</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+
+  <div class="header">
+    <div class="welcome-text">
+      <h2>Bienvenido, Camilo</h2>
+      <p>Jueves, 26 septiembre 2024</p>
+    </div>
+    <div class="user-avatar">CC</div>
+  </div>
+
+  <div class="contenido">
+    <button class="modal-button" onclick="abrirModal()">Reclamar Medicamentos</button>
+
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <h2>Solicitar Medicamento</h2>
+        <p>En esta sección podrás asignar tu cita médica con nuestros especialistas.</p>
+
+        <div class="form-group">
+          <label>Medicamento:</label>
+          <input type="text" id="medicamento" placeholder="Ejemplo: Acetaminofén">
+        </div>
+
+        <div class="form-group">
+          <label>Orden médica:</label>
+          <div class="file-input">
+            <span id="file-name">Adjuntar archivo</span>
+            <button onclick="document.getElementById('ordenMedica').click()">Adjuntar</button>
+          </div>
+          <input type="file" id="ordenMedica" style="display: none" onchange="updateFileName()">
+        </div>
+
+        <div class="form-group">
+          <label>Fecha de entrega:</label>
+          <input type="date" id="fechaEntrega">
+        </div>
+
+        <div class="form-group">
+          <label>Dirección:</label>
+          <input type="text" id="direccion" placeholder="Ejemplo: Carrera 15 #74-43">
+        </div>
+
+        <div class="button-group">
+          <button class="button cancel-button-modal" onclick="cerrarModal()">Cancelar</button>
+          <button class="button submit-button" onclick="solicitarMedicamento()">Solicitar</button>
+        </div>
+      </div>
+    </div>
+
+
+    <table>
+      <thead>
+        <tr>
+          <th>Referencia</th>
+          <th>Nombre de Medicamento</th>
+          <th>Cantidad</th>
+          <th>Estado</th>
+          <th>Opciones</th>
+        </tr>
+      </thead>
+      <tbody id="medicamentos">
+        <tr>
+          <td>369857412</td>
+          <td>Omeprazol</td>
+          <td>5</td>
+          <td class="estado">En proceso</td>
+          <td><button class="cancel-button" onclick="cancelarPedido(this)">Cancelar orden</button></td>
+        </tr>
+        <tr>
+          <td>400569871</td>
+          <td>Acetaminofén</td>
+          <td>10</td>
+          <td class="estado">Cancelado</td>
+          <td><button class="cancel-button" disabled>Cancelar orden</button></td>
+        </tr>
+        <tr>
+          <td>403568712</td>
+          <td>Vitamina C</td>
+          <td>3</td>
+          <td class="estado">Entregado</td>
+          <td><button class="cancel-button" disabled>Cancelar orden</button></td>
+        </tr>
+      </tbody>
+
+      <tfoot>
+        <tr>
+          <td colspan="5">
+            <div class="pagination-container">
+              <span>Items per page:</span>
+              <select>
+                <option>5</option>
+                <option>10</option>
+                <option>25</option>
+                <option>50</option>
+              </select>
+
+              <span class="pagination-info">1 of 50</span>
+
+              <button class="pagination-button">‹</button>
+              <button class="pagination-button">›</button>
+            </div>
+          </td>
+        </tr>
+      </tfoot>
+
+    </table>
+  </div>
+  <div id="modalConfirmacion" class="modal">
+    <div class="modal-content">
+      <div class="info-circle">
+        <span>i</span>
+      </div>
+      <p style="margin-top: 15px;">¿Está seguro en cancelar orden del<br>medicamento?</p>
+      <div class="button-group">
+        <button class="button submit-button" id="btnConfirmarCancelacion">Cancelar orden</button>
+        <button class="button cancel-button-modal" id="btnCancelarModal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+
+
+  <script>
+    let botonParaCancelar = null;
+
+    function cancelarPedido(button) {
+      botonParaCancelar = button;
+      document.getElementById("modalConfirmacion").style.display = "flex";
+    }
+
+    document.getElementById("btnConfirmarCancelacion").onclick = function () {
+      if (botonParaCancelar) {
+        let fila = botonParaCancelar.parentElement.parentElement;
+        let estadoCelda = fila.querySelector(".estado");
+        estadoCelda.textContent = "Cancelado";
+        botonParaCancelar.disabled = true;
+      }
+      cerrarModalConfirmacion();
+    };
+
+    document.getElementById("btnCancelarModal").onclick = cerrarModalConfirmacion;
+
+    function cerrarModalConfirmacion() {
+      document.getElementById("modalConfirmacion").style.display = "none";
+      botonParaCancelar = null;
+    }
+
+    function abrirModal() {
+      document.getElementById("modal").style.display = "flex";
+    }
+
+    function cerrarModal() {
+      document.getElementById("modal").style.display = "none";
+    }
+
+    function solicitarMedicamento() {
+      const nombre = document.getElementById("medicamento").value.trim();
+      const fecha = document.getElementById("fechaEntrega").value.trim();
+      const direccion = document.getElementById("direccion").value.trim();
+
+      if (!nombre || !fecha || !direccion) {
+        alert("Por favor, completa todos los campos.");
+        return;
+      }
+
+      const referencia = Math.floor(100000000 + Math.random() * 900000000);
+      const nuevaFila = document.createElement("tr");
+      nuevaFila.innerHTML = `
+        <td>${referencia}</td>
+        <td>${nombre}</td>
+        <td>1</td>
+        <td class="estado">En proceso</td>
+        <td><button class="cancel-button" onclick="cancelarPedido(this)">Cancelar orden</button></td>
+      `;
+
+      document.getElementById("medicamentos").appendChild(nuevaFila);
+
+
+      document.getElementById("medicamento").value = "";
+      document.getElementById("fechaEntrega").value = "";
+      document.getElementById("direccion").value = "";
+      document.getElementById("file-name").textContent = "Adjuntar archivo";
+      document.getElementById("ordenMedica").value = "";
+
+      cerrarModal();
+      alert("Solicitud enviada con éxito.");
+    }
+
+    function updateFileName() {
+      const input = document.getElementById("ordenMedica");
+      document.getElementById("file-name").textContent = input.files[0]?.name || "Adjuntar archivo";
+    }
+  </script>
+
+</body>
+
+</html>
