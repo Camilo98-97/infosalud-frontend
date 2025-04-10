@@ -6,6 +6,25 @@
     <title>Historia Clinica</title>
     <link rel="stylesheet" href="styleclinica.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+      /* Estilos CSS para el botón Generar PDF */
+      .pdf-button {
+        padding: 10px 15px;
+        background-color: #58719d; /* Nuevo color para el botón Generar PDF */
+        color: white; /* Color de texto blanco */
+        border: none; /* Sin borde */
+        border-radius: 12px; /* Bordes redondeados */
+        cursor: pointer; /* Cambiar cursor al pasar sobre el botón */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 150px; /* Ancho mínimo para que coincida con los otros botones */
+      }
+
+      .pdf-button:hover {
+        background-color: #4d6e95; /* Cambia el color al pasar el mouse */
+      }
+    </style>
   </head>
   <body>
     <header>
@@ -56,142 +75,126 @@
       </button>
     </form>
 
-    <div id="pdfPreview">
+    <div id="pdfPreview" style="display: none">
       <h2>Historia Clínica</h2>
       <div id="previewContent"></div>
-      <button onclick="generatePDF()">Generar PDF</button>
+      <button class="pdf-button" onclick="generatePDF()">Generar PDF</button>
     </div>
 
     <script>
       const historiasClinicas = {
         Cardiología: `
-                <strong>Historia Clínica - Cardiología</strong>
-                <p>Fecha de consulta: <em>[Fecha]</em></p>
-                <p>Nombre del paciente: <em>[Nombre del paciente]</em></p>
-                <p>Edad: <em>[Edad]</em></p>
-                <p>Sexo: <em>[Sexo]</em></p>
-                <p>Motivo de consulta: Dolor en el pecho, palpitaciones y fatiga.</p>
-                
-                <p><strong>Antecedentes personales:</strong></p>
-                <ul>
-                    <li>Enfermedades previas: Hipertensión, diabetes tipo 2.</li>
-                    <li>Cirugías previas: Angioplastia en 2020.</li>
-                    <li>Medicamentos actuales: Losartán, Metformina.</li>
-                </ul>
-
-                <p><strong>Exploración física:</strong></p>
-                <ul>
-                    <li>Presión arterial: 140/90 mmHg.</li>
-                    <li>Frecuencia cardíaca: 88 lpm.</li>
-                    <li>Ruidos cardíacos: Rítmicos, sin soplos.</li>
-                    <li>Examen pulmonar: Sin estertores ni sibilancias.</li>
-                </ul>
-
-                <p><strong>Estudios complementarios:</strong> 
-                Se solicitaron exámenes de laboratorio y un electrocardiograma. 
-                Se recomienda un ecocardiograma para evaluar la función cardíaca.
-                </p>
-
-                <p><strong>Plan de manejo:</strong> 
-                - Modificación en el estilo de vida (dieta, ejercicio). 
-                - Revisión en un mes para evaluar la efectividad del tratamiento.
-                </p>
-            `,
+            <strong>Historia Clínica - Cardiología</strong>
+            <p>Fecha de consulta: <em>[Fecha]</em></p>
+            <p>Nombre del paciente: <em>[Nombre del paciente]</em></p>
+            <p>Edad: <em>[Edad]</em></p>
+            <p>Sexo: <em>[Sexo]</em></p>
+            <p>Motivo de consulta: Dolor en el pecho, palpitaciones y fatiga.</p>
+            <p><strong>Antecedentes personales:</strong></p>
+            <ul>
+                <li>Enfermedades previas: Hipertensión, diabetes tipo 2.</li>
+                <li>Cirugías previas: Angioplastia en 2020.</li>
+                <li>Medicamentos actuales: Losartán, Metformina.</li>
+            </ul>
+            <p><strong>Exploración física:</strong></p>
+            <ul>
+                <li>Presión arterial: 140/90 mmHg.</li>
+                <li>Frecuencia cardíaca: 88 lpm.</li>
+                <li>Ruidos cardíacos: Rítmicos, sin soplos.</li>
+                <li>Examen pulmonar: Sin estertores ni sibilancias.</li>
+            </ul>
+            <p><strong>Estudios complementarios:</strong> 
+            Se solicitaron exámenes de laboratorio y un electrocardiograma. 
+            Se recomienda un ecocardiograma para evaluar la función cardíaca.
+            </p>
+            <p><strong>Plan de manejo:</strong> 
+            - Modificación en el estilo de vida (dieta, ejercicio). 
+            - Revisión en un mes para evaluar la efectividad del tratamiento.
+            </p>
+        `,
         Neurología: `
-                <strong>Historia Clínica - Neurología</strong>
-                <p>Fecha de consulta: <em>[Fecha]</em></p>
-                <p>Nombre del paciente: <em>[Nombre del paciente]</em></p>
-                <p>Edad: <em>[Edad]</em></p>
-                <p>Sexo: <em>[Sexo]</em></p>
-                <p>Motivo de consulta: Cefalea recurrente, mareos y debilidad en el lado derecho del cuerpo.</p>
-                
-                <p><strong>Antecedentes personales:</strong></p>
-                <ul>
-                    <li>Enfermedades previas: Migrañas desde la adolescencia.</li>
-                    <li>Cirugías previas: Ninguna.</li>
-                    <li>Medicamentos actuales: Ibuprofeno según necesidad.</li>
-                </ul>
-
-                <p><strong>Exploración neurológica:</strong></p>
-                <ul>
-                    <li>Conciencia: Alerta y orientado.</li>
-                    <li>Motor: Debilidad en el brazo derecho (4/5).</li>
-                    <li>Reflejos: Aumento de los reflejos en el lado derecho.</li>
-                    <li>Examen sensitivo: Hiposensibilidad en el brazo y pierna derechos.</li>
-                </ul>
-
-                <p><strong>Estudios complementarios:</strong> 
-                Se realizó una resonancia magnética cerebral que mostró signos de isquemia anterior.
-                </p>
-
-                <p><strong>Plan de manejo:</strong> 
-                - Referencia a terapia física. 
-                - Medicación para prevenir migrañas. 
-                - Seguimiento en 2 semanas.
-                </p>
-            `,
+            <strong>Historia Clínica - Neurología</strong>
+            <p>Fecha de consulta: <em>[Fecha]</em></p>
+            <p>Nombre del paciente: <em>[Nombre del paciente]</em></p>
+            <p>Edad: <em>[Edad]</em></p>
+            <p>Sexo: <em>[Sexo]</em></p>
+            <p>Motivo de consulta: Cefalea recurrente, mareos y debilidad en el lado derecho del cuerpo.</p>
+            <p><strong>Antecedentes personales:</strong></p>
+            <ul>
+                <li>Enfermedades previas: Migrañas desde la adolescencia.</li>
+                <li>Cirugías previas: Ninguna.</li>
+                <li>Medicamentos actuales: Ibuprofeno según necesidad.</li>
+            </ul>
+            <p><strong>Exploración neurológica:</strong></p>
+            <ul>
+                <li>Conciencia: Alerta y orientado.</li>
+                <li>Motor: Debilidad en el brazo derecho (4/5).</li>
+                <li>Reflejos: Aumento de los reflejos en el lado derecho.</li>
+                <li>Examen sensitivo: Hiposensibilidad en el brazo y pierna derechos.</li>
+            </ul>
+            <p><strong>Estudios complementarios:</strong> 
+            Se realizó una resonancia magnética cerebral que mostró signos de isquemia anterior.
+            </p>
+            <p><strong>Plan de manejo:</strong> 
+            - Referencia a terapia física. 
+            - Medicación para prevenir migrañas. 
+            - Seguimiento en 2 semanas.
+            </p>
+        `,
         Pediatría: `
-                <strong>Historia Clínica - Pediatría</strong>
-                <p>Fecha de consulta: <em>[Fecha]</em></p>
-                <p>Nombre del paciente: <em>[Nombre del paciente]</em></p>
-                <p>Edad: <em>[Edad]</em></p>
-                <p>Sexo: <em>[Sexo]</em></p>
-                <p>Motivo de consulta: Fiebre persistente, tos y dificultad para respirar.</p>
-                
-                <p><strong>Antecedentes personales:</strong></p>
-                <ul>
-                    <li>Enfermedades previas: Asma desde los 3 años.</li>
-                    <li>Vacunas: Completa según el calendario.</li>
-                    <li>Medicamentos actuales: Salbutamol en aerosol.</li>
-                </ul>
-
-                <p><strong>Exploración física:</strong></p>
-                <ul>
-                    <li>Signos vitales: Fiebre 39°C, frecuencia respiratoria 28 rpm.</li>
-                    <li>Examen pulmonar: Sibilancias bilaterales, uso de músculos accesorios.</li>
-                    <li>Examen cardiovascular: Ritmo regular, sin soplos.</li>
-                </ul>
-
-                <p><strong>Estudios complementarios:</strong> 
-                Se solicitó un hemograma y una radiografía de tórax para descartar neumonía.
-                </p>
-
-                <p><strong>Plan de manejo:</strong> 
-                - Medicación: Antibióticos y broncodilatadores. 
-                - Monitorización en casa y seguimiento en 3 días.
-                </p>
-            `,
+            <strong>Historia Clínica - Pediatría</strong>
+            <p>Fecha de consulta: <em>[Fecha]</em></p>
+            <p>Nombre del paciente: <em>[Nombre del paciente]</em></p>
+            <p>Edad: <em>[Edad]</em></p>
+            <p>Sexo: <em>[Sexo]</em></p>
+            <p>Motivo de consulta: Fiebre persistente, tos y dificultad para respirar.</p>
+            <p><strong>Antecedentes personales:</strong></p>
+            <ul>
+                <li>Enfermedades previas: Asma desde los 3 años.</li>
+                <li>Vacunas: Completa según el calendario.</li>
+                <li>Medicamentos actuales: Salbutamol en aerosol.</li>
+            </ul>
+            <p><strong>Exploración física:</strong></p>
+            <ul>
+                <li>Signos vitales: Fiebre 39°C, frecuencia respiratoria 28 rpm.</li>
+                <li>Examen pulmonar: Sibilancias bilaterales, uso de músculos accesorios.</li>
+                <li>Examen cardiovascular: Ritmo regular, sin soplos.</li>
+            </ul>
+            <p><strong>Estudios complementarios:</strong> 
+            Se solicitó un hemograma y una radiografía de tórax para descartar neumonía.
+            </p>
+            <p><strong>Plan de manejo:</strong> 
+            - Medicación: Antibióticos y broncodilatadores. 
+            - Monitorización en casa y seguimiento en 3 días.
+            </p>
+        `,
         Ortopedia: `
-                <strong>Historia Clínica - Ortopedia</strong>
-                <p>Fecha de consulta: <em>[Fecha]</em></p>
-                <p>Nombre del paciente: <em>[Nombre del paciente]</em></p>
-                <p>Edad: <em>[Edad]</em></p>
-                <p>Sexo: <em>[Sexo]</em></p>
-                <p>Motivo de consulta: Dolor en la rodilla derecha tras un accidente deportivo.</p>
-                
-                <p><strong>Antecedentes personales:</strong></p>
-                <ul>
-                    <li>Enfermedades previas: Ninguna.</li>
-                    <li>Cirugías previas: Artroscopia de rodilla en 2022.</li>
-                    <li>Medicamentos actuales: Ninguno.</li>
-                </ul>
-
-                <p><strong>Exploración física:</strong></p>
-                <ul>
-                    <li>Inspección: Hinchazón en la rodilla derecha.</li>
-                    <li>Movilidad: Limitación en la flexión y extensión.</li>
-                    <li>Pruebas de estabilidad: Positiva para el signo de Lachman.</li>
-                </ul>
-
-                <p><strong>Estudios complementarios:</strong> 
-                Se solicitó una resonancia magnética para evaluar el estado del ligamento cruzado anterior.
-                </p>
-
-                <p><strong>Plan de manejo:</strong> 
-                - Reposo y fisioterapia. 
-                - Revisión en una semana para evaluar la progresión.
-                </p>
-            `,
+            <strong>Historia Clínica - Ortopedia</strong>
+            <p>Fecha de consulta: <em>[Fecha]</em></p>
+            <p>Nombre del paciente: <em>[Nombre del paciente]</em></p>
+            <p>Edad: <em>[Edad]</em></p>
+            <p>Sexo: <em>[Sexo]</em></p>
+            <p>Motivo de consulta: Dolor en la rodilla derecha tras un accidente deportivo.</p>
+            <p><strong>Antecedentes personales:</strong></p>
+            <ul>
+                <li>Enfermedades previas: Ninguna.</li>
+                <li>Cirugías previas: Artroscopia de rodilla en 2022.</li>
+                <li>Medicamentos actuales: Ninguno.</li>
+            </ul>
+            <p><strong>Exploración física:</strong></p>
+            <ul>
+                <li>Inspección: Hinchazón en la rodilla derecha.</li>
+                <li>Movilidad: Limitación en la flexión y extensión.</li>
+                <li>Pruebas de estabilidad: Positiva para el signo de Lachman.</li>
+            </ul>
+            <p><strong>Estudios complementarios:</strong> 
+            Se solicitó una resonancia magnética para evaluar el estado del ligamento cruzado anterior.
+            </p>
+            <p><strong>Plan de manejo:</strong> 
+            - Reposo y fisioterapia. 
+            - Revisión en una semana para evaluar la progresión.
+            </p>
+        `,
       };
 
       function showPreview() {
@@ -210,22 +213,25 @@
           .replace(/\[Nombre del paciente\]/g, "Juan Pérez")
           .replace(/\[Edad\]/g, "30 años")
           .replace(/\[Sexo\]/g, "Masculino");
-        const previewContent = `
-                <p>${detalles}</p>
-            `;
+        const previewContent = `<p>${detalles}</p>`;
 
         document.getElementById("previewContent").innerHTML = previewContent;
         document.getElementById("pdfPreview").style.display = "block"; // Mostrar la sección de vista previa
       }
 
-      function generatePDF() {
+      async function generatePDF() {
         const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
         const fecha = document.querySelector('input[name="fecha"]').value;
         const especialista = document.querySelector(
           'select[name="especialista"]'
         ).value;
 
-        const doc = new jsPDF();
+        const content = historiasClinicas[especialista]
+          .replace(/\[Fecha\]/g, fecha)
+          .replace(/\[Nombre del paciente\]/g, "Juan Pérez")
+          .replace(/\[Edad\]/g, "30 años")
+          .replace(/\[Sexo\]/g, "Masculino");
 
         doc.setFontSize(22);
         doc.text("Historia Clínica", 10, 10);
@@ -234,17 +240,15 @@
         doc.text(`Especialista: ${especialista}`, 10, 35);
         doc.setFontSize(12);
 
-        const content = historiasClinicas[especialista]
-          .replace(/\[Fecha\]/g, fecha)
-          .replace(/\[Nombre del paciente\]/g, "Juan Pérez")
-          .replace(/\[Edad\]/g, "30 años")
-          .replace(/\[Sexo\]/g, "Masculino");
-        const lines = content.split("\n");
+        // Limpiar contenido HTML para que se muestre correctamente
+        const lines = content.replace(/<[^>]*>/g, "").split("\n");
         let y = 60; // Start position for text
 
         lines.forEach((line) => {
-          doc.text(line, 10, y);
-          y += 10; // Line height
+          if (line.trim() !== "") {
+            doc.text(line, 10, y);
+            y += 10; // Line height
+          }
         });
 
         doc.save("historia_clinica.pdf");
