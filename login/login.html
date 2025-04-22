@@ -1,27 +1,40 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login - Plataforma de Citas Médicas</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar Sesión</title>
   <style>
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
       background-color: #f2f2f2;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      margin: 0;
     }
 
-    .login-container {
+    .container {
+      display: flex;
       background-color: #fff;
-      padding: 2rem;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      max-width: 800px;
+      overflow: hidden;
       width: 100%;
-      max-width: 400px;
+    }
+
+    .image-section {
+      flex: 1;
+      background-image: url('imagen.png');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .form-section {
+      flex: 1;
+      padding: 2rem;
     }
 
     h2 {
@@ -67,46 +80,48 @@
     }
 
     .options a {
-      display: block;
       color: #007bff;
       text-decoration: none;
-      margin-top: 0.5rem;
+      margin: 0 0.5rem;
     }
   </style>
 </head>
 <body>
-  <div class="login-container">
-    <h2>Iniciar Sesión</h2>
-    <form id="loginForm">
-      <div class="form-group">
-        <label for="username">Usuario</label>
-        <input type="text" id="username" required />
+  <div class="container">
+    <div class="image-section"></div>
+    <div class="form-section">
+      <h2>Iniciar Sesión</h2>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="usuario">Usuario</label>
+          <input type="text" id="usuario" required />
+        </div>
+        <div class="form-group">
+          <label for="contrasena">Contraseña</label>
+          <input type="password" id="contrasena" required />
+        </div>
+        <button type="submit">Iniciar Sesión</button>
+      </form>
+      <div class="options">
+        <a href="registro.html">Crear usuario</a>
+        <a href="recuperar.html">¿Olvidaste tu contraseña?</a>
       </div>
-      <div class="form-group">
-        <label for="password">Contraseña</label>
-        <input type="password" id="password" required />
-      </div>
-      <button type="submit">Ingresar</button>
-    </form>
-    <div class="options">
-      <a href="registro.html">Crear nuevo usuario</a>
-      <a href="recuperar.html">Recuperar contraseña</a>
     </div>
   </div>
 
   <script>
     document.getElementById('loginForm').addEventListener('submit', function(event) {
       event.preventDefault();
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
+      const usuario = document.getElementById('usuario').value;
+      const contrasena = document.getElementById('contrasena').value;
 
-      // Simulación de carga de datos desde localStorage
       const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
-      const usuarioValido = usuarios.find(u => u.usuario === username && u.contrasena === password);
+      const usuarioEncontrado = usuarios.find(u => u.usuario === usuario && u.contrasena === contrasena);
 
-      if (usuarioValido) {
+      if (usuarioEncontrado) {
         alert('Inicio de sesión exitoso');
-        // Redirigir a la página principal o dashboard
+        // Redireccionar a la página principal de usuario
+        window.location.href = 'miscitas.html';
       } else {
         alert('Usuario o contraseña incorrectos');
       }

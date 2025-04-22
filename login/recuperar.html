@@ -1,27 +1,40 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Recuperar Contraseña</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       background-color: #f2f2f2;
+      margin: 0;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
+    }
+
+    .container {
+      display: flex;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      max-width: 800px;
+      width: 100%;
+    }
+
+    .image-section {
+      flex: 1;
+      background-image: url('imagen.png');
+      background-size: cover;
+      background-position: center;
     }
 
     .recuperar-container {
-      background-color: #fff;
+      flex: 1;
       padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      width: 100%;
-      max-width: 400px;
     }
 
     h2 {
@@ -48,7 +61,7 @@
     button {
       width: 100%;
       padding: 0.75rem;
-      background-color: #17a2b8;
+      background-color: #007bff;
       color: white;
       border: none;
       border-radius: 5px;
@@ -57,7 +70,7 @@
     }
 
     button:hover {
-      background-color: #138496;
+      background-color: #0056b3;
     }
 
     .options {
@@ -72,17 +85,20 @@
   </style>
 </head>
 <body>
-  <div class="recuperar-container">
-    <h2>Recuperar Contraseña</h2>
-    <form id="recuperarForm">
-      <div class="form-group">
-        <label for="correo">Correo Electrónico</label>
-        <input type="email" id="correo" required />
+  <div class="container">
+    <div class="image-section"></div>
+    <div class="recuperar-container">
+      <h2>Recuperar Contraseña</h2>
+      <form id="recuperarForm">
+        <div class="form-group">
+          <label for="correo">Correo Electrónico</label>
+          <input type="email" id="correo" required />
+        </div>
+        <button type="submit">Enviar enlace de recuperación</button>
+      </form>
+      <div class="options">
+        <a href="login.html">Volver al inicio de sesión</a>
       </div>
-      <button type="submit">Enviar enlace de recuperación</button>
-    </form>
-    <div class="options">
-      <a href="login.html">Volver al inicio de sesión</a>
     </div>
   </div>
 
@@ -90,14 +106,13 @@
     document.getElementById('recuperarForm').addEventListener('submit', function(event) {
       event.preventDefault();
       const correo = document.getElementById('correo').value;
-
       const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
-      const usuario = usuarios.find(u => u.email === correo);
 
-      if (usuario) {
-        alert(`Se ha enviado un enlace de recuperación al correo: ${correo}`);
+      if (usuarios.some(u => u.email === correo)) {
+        alert('Se ha enviado el enlace de recuperación al correo.');
+        window.location.href = 'restablecer.html'; // Redirige a la página de restablecer contraseña
       } else {
-        alert('No se encontró ninguna cuenta con ese correo electrónico.');
+        alert('No se encontró ninguna cuenta registrada con ese correo.');
       }
     });
   </script>
