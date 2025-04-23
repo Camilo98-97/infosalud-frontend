@@ -1,8 +1,24 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f9f9f9; /* Fondo claro para el cuerpo */
+* {
   margin: 0;
-  padding: 20px;
+  padding: 0;
+  /* box-sizing: border-box; */
+  font-family: poppins, sans-serif;
+}
+
+body {
+  background-color: #F5EDED; /* Fondo claro para el cuerpo */
+  margin: 0;
+  /* padding: 20px; */
+}
+
+#main {
+  display: flex;
+}
+
+#container-history {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 header {
@@ -79,7 +95,8 @@ p {
   display: flex; /* Usar Flexbox */
   align-items: center; /* Alinear verticalmente al centro */
   gap: 10px; /* Espacio entre los elementos */
-  margin-top: 20px; /* Espacio superior */
+  margin-top: 2rem; /* Espacio superior */
+  margin-left: 20px; /* Espacio izquierdo */
 }
 
 .input-group {
@@ -102,7 +119,7 @@ select {
   padding: 10px;
   border: 2px solid #ccc; /* Ancho del borde */
   border-radius: 12px; /* Bordes más circulares */
-  width: 200px; /* Ajusta el ancho para que coincida con la imagen */
+  width: 290px; /* Ajusta el ancho para que coincida con la imagen */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
   font-size: 16px; /* Tamaño de fuente más grande */
   min-width: 150px; /* Ancho mínimo para los botones */

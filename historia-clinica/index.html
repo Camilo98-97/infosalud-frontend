@@ -1,89 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Historia Clinica</title>
-    <link rel="stylesheet" href="styleclinica.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <style>
-      /* Estilos CSS para el botón Generar PDF */
-      .pdf-button {
-        padding: 10px 15px;
-        background-color: #58719d; /* Nuevo color para el botón Generar PDF */
-        color: white; /* Color de texto blanco */
-        border: none; /* Sin borde */
-        border-radius: 12px; /* Bordes redondeados */
-        cursor: pointer; /* Cambiar cursor al pasar sobre el botón */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-width: 150px; /* Ancho mínimo para que coincida con los otros botones */
-      }
 
-      .pdf-button:hover {
-        background-color: #4d6e95; /* Cambia el color al pasar el mouse */
-      }
-    </style>
-  </head>
-  <body>
-    <header>
-      <div class="header-content">
-        <h1>Bienvenido, Camilo</h1>
-        <p>Jueves, 26 septiembre 2024</p>
-      </div>
-      <div class="buttons-container">
-        <button class="notification-button">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="#6482AD"
-            class="size-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"
-            />
-          </svg>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Historia Clinica</title>
+  <link rel="stylesheet" href="styleclinica.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link rel="stylesheet" href="../menu/styleMenu.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <link rel="icon" type="image/png" href="/assets/favicon/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg" />
+  <link rel="shortcut icon" href="/assets/favicon/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png" />
+  <link rel="manifest" href="/assets/favicon/site.webmanifest" />
+  <style>
+    /* Estilos CSS para el botón Generar PDF */
+    .pdf-button {
+      padding: 10px 15px;
+      background-color: #58719d;
+      /* Nuevo color para el botón Generar PDF */
+      color: white;
+      /* Color de texto blanco */
+      border: none;
+      /* Sin borde */
+      border-radius: 12px;
+      /* Bordes redondeados */
+      cursor: pointer;
+      /* Cambiar cursor al pasar sobre el botón */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 150px;
+      /* Ancho mínimo para que coincida con los otros botones */
+    }
+
+    .pdf-button:hover {
+      background-color: #4d6e95;
+      /* Cambia el color al pasar el mouse */
+    }
+  </style>
+</head>
+
+<body>
+  <div id="main">
+    <div id="menu-container"></div>
+    <div id="container-history">
+      <header>
+        <div class="header-content">
+          <h1>Bienvenido, Camilo</h1>
+          <!-- <p>Jueves, 26 septiembre 2024</p> -->
+          <p id="current-date"></p>
+        </div>
+        <div class="buttons-container">
+          <button class="notification-button">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6482AD"
+              class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+            </svg>
+          </button>
+          <button class="profile-button">CC</button>
+        </div>
+      </header>
+
+      <form id="form" class="form-inline">
+        <div class="input-group">
+          <label for="fecha">Fecha</label>
+          <input type="date" name="fecha" value="2025-03-30" />
+        </div>
+
+        <div class="input-group">
+          <label for="especialista">Especialista</label>
+          <select name="especialista">
+            <option disabled selected>Seleccione una especialidad</option>
+            <option value="Cardiología">Cardiología</option>
+            <option value="Neurología">Neurología</option>
+            <option value="Pediatría">Pediatría</option>
+            <option value="Ortopedia">Ortopedia</option>
+          </select>
+        </div>
+
+        <button type="button" class="search-button" onclick="showPreview()">
+          Buscar
         </button>
-        <button class="profile-button">CC</button>
+      </form>
+      <div id="pdfPreview" style="display: none">
+        <h2>Historia Clínica</h2>
+        <div id="previewContent"></div>
+        <button class="pdf-button" onclick="generatePDF()">Generar PDF</button>
       </div>
-    </header>
-
-    <form id="form" class="form-inline">
-      <div class="input-group">
-        <label for="fecha">Fecha</label>
-        <input type="date" name="fecha" value="2025-03-30" />
-      </div>
-
-      <div class="input-group">
-        <label for="especialista">Especialista</label>
-        <select name="especialista">
-          <option disabled selected>Seleccione una especialidad</option>
-          <option value="Cardiología">Cardiología</option>
-          <option value="Neurología">Neurología</option>
-          <option value="Pediatría">Pediatría</option>
-          <option value="Ortopedia">Ortopedia</option>
-        </select>
-      </div>
-
-      <button type="button" class="search-button" onclick="showPreview()">
-        Buscar
-      </button>
-    </form>
-
-    <div id="pdfPreview" style="display: none">
-      <h2>Historia Clínica</h2>
-      <div id="previewContent"></div>
-      <button class="pdf-button" onclick="generatePDF()">Generar PDF</button>
     </div>
 
-    <script>
-      const historiasClinicas = {
-        Cardiología: `
+  </div>
+
+  <script>
+    const historiasClinicas = {
+      Cardiología: `
             <strong>Historia Clínica - Cardiología</strong>
             <p>Fecha de consulta: <em>[Fecha]</em></p>
             <p>Nombre del paciente: <em>[Nombre del paciente]</em></p>
@@ -112,7 +129,7 @@
             - Revisión en un mes para evaluar la efectividad del tratamiento.
             </p>
         `,
-        Neurología: `
+      Neurología: `
             <strong>Historia Clínica - Neurología</strong>
             <p>Fecha de consulta: <em>[Fecha]</em></p>
             <p>Nombre del paciente: <em>[Nombre del paciente]</em></p>
@@ -141,7 +158,7 @@
             - Seguimiento en 2 semanas.
             </p>
         `,
-        Pediatría: `
+      Pediatría: `
             <strong>Historia Clínica - Pediatría</strong>
             <p>Fecha de consulta: <em>[Fecha]</em></p>
             <p>Nombre del paciente: <em>[Nombre del paciente]</em></p>
@@ -168,7 +185,7 @@
             - Monitorización en casa y seguimiento en 3 días.
             </p>
         `,
-        Ortopedia: `
+      Ortopedia: `
             <strong>Historia Clínica - Ortopedia</strong>
             <p>Fecha de consulta: <em>[Fecha]</em></p>
             <p>Nombre del paciente: <em>[Nombre del paciente]</em></p>
@@ -195,64 +212,77 @@
             - Revisión en una semana para evaluar la progresión.
             </p>
         `,
-      };
+    };
 
-      function showPreview() {
-        const fecha = document.querySelector('input[name="fecha"]').value;
-        const especialista = document.querySelector(
-          'select[name="especialista"]'
-        ).value;
+    function showPreview() {
+      const fecha = document.querySelector('input[name="fecha"]').value;
+      const especialista = document.querySelector(
+        'select[name="especialista"]'
+      ).value;
 
-        if (!especialista) {
-          alert("Por favor, seleccione una especialidad.");
-          return;
+      if (!especialista) {
+        alert("Por favor, seleccione una especialidad.");
+        return;
+      }
+
+      const detalles = historiasClinicas[especialista]
+        .replace(/\[Fecha\]/g, fecha)
+        .replace(/\[Nombre del paciente\]/g, "Juan Pérez")
+        .replace(/\[Edad\]/g, "30 años")
+        .replace(/\[Sexo\]/g, "Masculino");
+      const previewContent = `<p>${detalles}</p>`;
+
+      document.getElementById("previewContent").innerHTML = previewContent;
+      document.getElementById("pdfPreview").style.display = "block"; // Mostrar la sección de vista previa
+    }
+
+    async function generatePDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      const fecha = document.querySelector('input[name="fecha"]').value;
+      const especialista = document.querySelector(
+        'select[name="especialista"]'
+      ).value;
+
+      const content = historiasClinicas[especialista]
+        .replace(/\[Fecha\]/g, fecha)
+        .replace(/\[Nombre del paciente\]/g, "Juan Pérez")
+        .replace(/\[Edad\]/g, "30 años")
+        .replace(/\[Sexo\]/g, "Masculino");
+
+      doc.setFontSize(22);
+      doc.text("Historia Clínica", 10, 10);
+      doc.setFontSize(14);
+      doc.text(`Fecha: ${fecha}`, 10, 25);
+      doc.text(`Especialista: ${especialista}`, 10, 35);
+      doc.setFontSize(12);
+
+      // Limpiar contenido HTML para que se muestre correctamente
+      const lines = content.replace(/<[^>]*>/g, "").split("\n");
+      let y = 60; // Start position for text
+
+      lines.forEach((line) => {
+        if (line.trim() !== "") {
+          doc.text(line, 10, y);
+          y += 10; // Line height
         }
+      });
 
-        const detalles = historiasClinicas[especialista]
-          .replace(/\[Fecha\]/g, fecha)
-          .replace(/\[Nombre del paciente\]/g, "Juan Pérez")
-          .replace(/\[Edad\]/g, "30 años")
-          .replace(/\[Sexo\]/g, "Masculino");
-        const previewContent = `<p>${detalles}</p>`;
+      doc.save("historia_clinica.pdf");
+    }
 
-        document.getElementById("previewContent").innerHTML = previewContent;
-        document.getElementById("pdfPreview").style.display = "block"; // Mostrar la sección de vista previa
-      }
+    fetch('../menu/menu.html')
+      .then(res => res.text())
+      .then(html => document.getElementById('menu-container').innerHTML = html);
 
-      async function generatePDF() {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        const fecha = document.querySelector('input[name="fecha"]').value;
-        const especialista = document.querySelector(
-          'select[name="especialista"]'
-        ).value;
+    const formatDateToSpanish = (date) => {
+      const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+      return date.toLocaleDateString('es-ES', options);
+    };
 
-        const content = historiasClinicas[especialista]
-          .replace(/\[Fecha\]/g, fecha)
-          .replace(/\[Nombre del paciente\]/g, "Juan Pérez")
-          .replace(/\[Edad\]/g, "30 años")
-          .replace(/\[Sexo\]/g, "Masculino");
+    const currentDate = new Date();
+    document.getElementById('current-date').textContent = formatDateToSpanish(currentDate);
+  </script>
+</body>
 
-        doc.setFontSize(22);
-        doc.text("Historia Clínica", 10, 10);
-        doc.setFontSize(14);
-        doc.text(`Fecha: ${fecha}`, 10, 25);
-        doc.text(`Especialista: ${especialista}`, 10, 35);
-        doc.setFontSize(12);
-
-        // Limpiar contenido HTML para que se muestre correctamente
-        const lines = content.replace(/<[^>]*>/g, "").split("\n");
-        let y = 60; // Start position for text
-
-        lines.forEach((line) => {
-          if (line.trim() !== "") {
-            doc.text(line, 10, y);
-            y += 10; // Line height
-          }
-        });
-
-        doc.save("historia_clinica.pdf");
-      }
-    </script>
-  </body>
 </html>
