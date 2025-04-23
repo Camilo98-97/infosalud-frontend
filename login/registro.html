@@ -15,13 +15,27 @@
       margin: 0;
     }
 
-    .registro-container {
+    .container {
+      display: flex;
       background-color: #fff;
-      padding: 2rem;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      max-width: 800px;
       width: 100%;
-      max-width: 400px;
+    }
+
+    .image-section {
+      flex: 1;
+      background-image: url('imagen.png');
+      background-size: cover;
+      background-position: center;
+      min-height: 100%;
+    }
+
+    .registro-container {
+      flex: 1;
+      padding: 2rem;
     }
 
     h2 {
@@ -50,7 +64,7 @@
     button {
       width: 100%;
       padding: 0.75rem;
-      background-color: #28a745;
+      background-color: #007bff;
       color: white;
       border: none;
       border-radius: 5px;
@@ -59,7 +73,7 @@
     }
 
     button:hover {
-      background-color: #218838;
+      background-color: #0056b3;
     }
 
     .options {
@@ -74,47 +88,46 @@
   </style>
 </head>
 <body>
-  <div class="registro-container">
-    <h2>Registro de Usuario</h2>
-    <form id="registroForm">
-      <div class="form-group">
-        <label for="nombre">Nombre</label>
-        <input type="text" id="nombre" required />
+  <div class="container">
+    <div class="image-section"></div>
+    <div class="registro-container">
+      <h2>Registro de Usuario</h2>
+      <form id="registroForm">
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input type="text" id="nombre" required />
+        </div>
+        <div class="form-group">
+          <label for="apellido">Apellido</label>
+          <input type="text" id="apellido" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Correo Electrónico</label>
+          <input type="email" id="email" required />
+        </div>
+        <div class="form-group">
+          <label for="contrasena">Contraseña</label>
+          <input type="password" id="contrasena" required />
+        </div>
+        <div class="form-group">
+          <label for="confirmar">Confirmar Contraseña</label>
+          <input type="password" id="confirmar" required />
+        </div>
+        <button type="submit">Registrarse</button>
+      </form>
+      <div class="options">
+        <a href="login.html">¿Ya tienes una cuenta? Inicia sesión</a>
       </div>
-      <div class="form-group">
-        <label for="apellido">Apellido</label>
-        <input type="text" id="apellido" required />
-      </div>
-      <div class="form-group">
-        <label for="email">Correo Electrónico</label>
-        <input type="email" id="email" required />
-      </div>
-      <div class="form-group">
-        <label for="usuario">Usuario</label>
-        <input type="text" id="usuario" required />
-      </div>
-      <div class="form-group">
-        <label for="contrasena">Contraseña</label>
-        <input type="password" id="contrasena" required />
-      </div>
-      <div class="form-group">
-        <label for="confirmar">Confirmar Contraseña</label>
-        <input type="password" id="confirmar" required />
-      </div>
-      <button type="submit">Registrar</button>
-    </form>
-    <div class="options">
-      <a href="login.html">Ya tengo cuenta</a>
     </div>
   </div>
 
   <script>
     document.getElementById('registroForm').addEventListener('submit', function(event) {
       event.preventDefault();
+
       const nombre = document.getElementById('nombre').value;
       const apellido = document.getElementById('apellido').value;
       const email = document.getElementById('email').value;
-      const usuario = document.getElementById('usuario').value;
       const contrasena = document.getElementById('contrasena').value;
       const confirmar = document.getElementById('confirmar').value;
 
@@ -123,20 +136,19 @@
         return;
       }
 
-      const nuevoUsuario = {
-        nombre,
-        apellido,
-        email,
-        usuario,
-        contrasena
-      };
-
+      const usuario = { nombre, apellido, email, contrasena };
       const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
-      usuarios.push(nuevoUsuario);
+
+      if (usuarios.some(u => u.email === email)) {
+        alert('Ya existe un usuario registrado con ese correo.');
+        return;
+      }
+
+      usuarios.push(usuario);
       localStorage.setItem('usuarios', JSON.stringify(usuarios));
 
-      alert('Usuario registrado exitosamente');
-      window.location.href = 'index.html';
+      alert('Usuario registrado exitosamente.');
+      window.location.href = 'login.html';
     });
   </script>
 </body>
