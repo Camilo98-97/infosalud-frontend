@@ -10,16 +10,17 @@
 </head>
 
 <body>
-
+   <!-- Encabezado con saludo al usuario y fecha -->
   <div class="header">
     <div class="welcome-text">
       <h2>Bienvenido, Camilo</h2>
       <p>Jueves, 26 septiembre 2024</p>
     </div>
-    <div class="user-avatar">CC</div>
+    <div class="user-avatar">CC</div> <!-- Avatar del usuario -->
   </div>
 
-  <div class="contenido">
+  <div class="contenido"> <!-- Contenedor principal del contenido -->
+    <!-- Tabla de medicamentos -->
     <table>
       <thead>
         <tr>
@@ -30,7 +31,7 @@
           <th>Opciones</th>
         </tr>
       </thead>
-      <tbody id="medicamentos">
+      <tbody id="medicamentos"> <!-- Filas de medicamentos con botones de acción -->
         <tr>
           <td>369857412</td>
           <td>Omeprazol</td>
@@ -65,7 +66,8 @@
           </td>
         </tr>
       </tbody>
-
+      
+      <!-- Pie de tabla con controles de paginación -->
       <tfoot>
         <tr>
           <td colspan="5">
@@ -89,7 +91,7 @@
 
     </table>
   </div>
-  <div id="modalConfirmacion" class="modal">
+  <div id="modalConfirmacion" class="modal"> <!-- Modal de confirmación de acción -->
     <div class="modal-content">
       <div class="info-circle">
         <span>i</span>
@@ -104,16 +106,20 @@
 
 
   <script>
+    // Función para agregar un nuevo medicamento manualmente
     function solicitarMedicamento() {
       const tbody = document.getElementById("medicamentos");
 
+      // Genera un código aleatorio
       const codigo = Math.floor(100000000 + Math.random() * 900000000);
       const nombre = prompt("Nombre del medicamento:");
       const cantidad = prompt("Cantidad:");
       const estado = "En proceso";
 
+      // Si no se ingresan datos, no se agrega
       if (!nombre || !cantidad) return;
 
+      // Crear una nueva fila con los datos
       const nuevaFila = document.createElement("tr");
 
       nuevaFila.innerHTML = `
@@ -130,11 +136,12 @@
 
       tbody.appendChild(nuevaFila);
     }
-
+  
+    // Variables globales para el modal
     let accionActual = ""; 
     let botonAccionado = null; 
 
-    
+     // Mostrar el modal con el mensaje personalizado
     function mostrarModal(accion, boton) {
       accionActual = accion;
       botonAccionado = boton;
@@ -148,14 +155,16 @@
       modal.style.display = "flex";
     }
 
-    
+    // Cierra el modal
     function cerrarModal() {
       const modal = document.getElementById("modalConfirmacion");
       modal.style.display = "none";
     }
 
+    // Ejecuta una vez el documento esté cargado
     document.addEventListener("DOMContentLoaded", function () {
-      
+
+      // Agrega evento a todos los botones de acción
       document.querySelectorAll(".btn-aprobar, .btn-entregar, .btn-denegar").forEach((boton) => {
         boton.addEventListener("click", function () {
           const clase = this.classList;
@@ -165,13 +174,14 @@
         });
       });
 
+      // Evento cuando se confirma una acción en el modal
       document.getElementById("btnConfirmarAccion").addEventListener("click", function () {
         if (botonAccionado) {
           const fila = botonAccionado.closest("tr");
           const estadoCelda = fila.querySelector(".estado");
           const opcionesCelda = fila.querySelector(".opciones");
 
-          
+          // Actualiza el estado según la acción realizada
           let estadoFormateado = "";
           if (accionActual === "Aprobar") {
             estadoFormateado = "Aprobado";
@@ -182,14 +192,13 @@
           }
           estadoCelda.textContent = estadoFormateado;
 
-          
+          // Elimina botones antiguos y agrega uno deshabilitado con la acción realizada
           opcionesCelda.innerHTML = "";
-
-          
           const boton = document.createElement("button");
           boton.textContent = accionActual;
           boton.disabled = true;
 
+          // Asigna clase correspondiente al nuevo botón
           if (accionActual === "Aprobar") {
             boton.className = "btn-aprobar";
           } else if (accionActual === "Entregar") {
@@ -201,10 +210,11 @@
           opcionesCelda.appendChild(boton);
         }
 
-        cerrarModal();
+        cerrarModal(); // Oculta el modal después de confirmar
 
       });
     });
+    document.getElementById("btnCancelarModal").addEventListener("click", cerrarModal); // Cierra el modal al hacer clic en cancelar
 
 
   </script>

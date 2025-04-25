@@ -20,18 +20,27 @@
   </div>
 
   <div class="contenido">
-    <button class="modal-button" onclick="abrirModal()">Reclamar Medicamentos</button>
+    <button class="modal-button" onclick="abrirModal()"> <!-- Botón para abrir el modal de solicitud de medicamento -->
+      <!-- Ícono SVG -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
+      </svg>
+      Reclamar Medicamentos
+    </button>
 
+    <!-- Modal para solicitar medicamento -->
     <div id="modal" class="modal">
       <div class="modal-content">
         <h2>Solicitar Medicamento</h2>
         <p>En esta sección podrás asignar tu cita médica con nuestros especialistas.</p>
 
+        <!-- Campo de nombre de medicamento -->
         <div class="form-group">
           <label>Medicamento:</label>
           <input type="text" id="medicamento" placeholder="Ejemplo: Acetaminofén">
         </div>
 
+        <!-- Campo para adjuntar orden médica -->
         <div class="form-group">
           <label>Orden médica:</label>
           <div class="file-input">
@@ -41,16 +50,19 @@
           <input type="file" id="ordenMedica" style="display: none" onchange="updateFileName()">
         </div>
 
+        <!-- Campo para seleccionar fecha -->
         <div class="form-group">
           <label>Fecha de entrega:</label>
           <input type="date" id="fechaEntrega">
         </div>
 
+        <!-- Campo para ingresar dirección -->
         <div class="form-group">
           <label>Dirección:</label>
           <input type="text" id="direccion" placeholder="Ejemplo: Carrera 15 #74-43">
         </div>
 
+        <!-- Botones de acción del modal -->
         <div class="button-group">
           <button class="button cancel-button-modal" onclick="cerrarModal()">Cancelar</button>
           <button class="button submit-button" onclick="solicitarMedicamento()">Solicitar</button>
@@ -59,6 +71,7 @@
     </div>
 
 
+     <!-- Tabla que muestra medicamentos solicitados -->
     <table>
       <thead>
         <tr>
@@ -93,6 +106,7 @@
         </tr>
       </tbody>
 
+      <!-- Pie de tabla con paginación -->
       <tfoot>
         <tr>
           <td colspan="5">
@@ -116,6 +130,7 @@
 
     </table>
   </div>
+  <!-- Modal de confirmación para cancelar orden -->
   <div id="modalConfirmacion" class="modal">
     <div class="modal-content">
       <div class="info-circle">
@@ -132,13 +147,15 @@
 
 
   <script>
-    let botonParaCancelar = null;
+    let botonParaCancelar = null;  // Variable para almacenar el botón que activa la cancelación
 
+    // Mostrar el modal de confirmación
     function cancelarPedido(button) {
       botonParaCancelar = button;
       document.getElementById("modalConfirmacion").style.display = "flex";
     }
 
+     // Confirmar cancelación del medicamento
     document.getElementById("btnConfirmarCancelacion").onclick = function () {
       if (botonParaCancelar) {
         let fila = botonParaCancelar.parentElement.parentElement;
@@ -149,31 +166,38 @@
       cerrarModalConfirmacion();
     };
 
+    // Cancelar y cerrar modal de confirmación
     document.getElementById("btnCancelarModal").onclick = cerrarModalConfirmacion;
 
+    // Ocultar modal de confirmación
     function cerrarModalConfirmacion() {
       document.getElementById("modalConfirmacion").style.display = "none";
       botonParaCancelar = null;
     }
 
+    // Mostrar el modal de solicitud
     function abrirModal() {
       document.getElementById("modal").style.display = "flex";
     }
 
+    // Cerrar el modal de solicitud
     function cerrarModal() {
       document.getElementById("modal").style.display = "none";
     }
 
+    // Función para solicitar un nuevo medicamento
     function solicitarMedicamento() {
       const nombre = document.getElementById("medicamento").value.trim();
       const fecha = document.getElementById("fechaEntrega").value.trim();
       const direccion = document.getElementById("direccion").value.trim();
 
+      // Validar campos
       if (!nombre || !fecha || !direccion) {
         alert("Por favor, completa todos los campos.");
         return;
       }
 
+      // Crear nueva fila con medicamento solicitado
       const referencia = Math.floor(100000000 + Math.random() * 900000000);
       const nuevaFila = document.createElement("tr");
       nuevaFila.innerHTML = `
@@ -187,6 +211,7 @@
       document.getElementById("medicamentos").appendChild(nuevaFila);
 
 
+      // Limpiar campos
       document.getElementById("medicamento").value = "";
       document.getElementById("fechaEntrega").value = "";
       document.getElementById("direccion").value = "";
@@ -194,9 +219,10 @@
       document.getElementById("ordenMedica").value = "";
 
       cerrarModal();
-      alert("Solicitud enviada con éxito.");
+      
     }
 
+    // Actualizar nombre de archivo adjuntos
     function updateFileName() {
       const input = document.getElementById("ordenMedica");
       document.getElementById("file-name").textContent = input.files[0]?.name || "Adjuntar archivo";
