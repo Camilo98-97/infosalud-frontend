@@ -1,104 +1,243 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-    content="width=device-width,initial-scale=1.0">
-    <title>Mis Citas</title>
-    <link rel="stylesheet"
-    href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mis Citas</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Estilos básicos para los modales */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
+    .modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+    }
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { display: block; margin-bottom: 0.3rem; }
+    .form-group input,
+    .form-group select { width: 100%; padding: 0.5rem; }
+    .button-group { display: flex; justify-content: space-between; }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="header-left">
-            <h1>Bienvenido, Camilo</h1>
-            <p class="date">jueves, 26 de septiembre 2024</p>
-        </div>
-        <div class="header-right">
-            <button class="notificacion-button">campana</button>
-            <button class="cc-button">CC</button>
-        </div>
-    </header>
+  <header>
+    <div class="header">
+      <div class="welcome-text">
+        <h2>Bienvenido, Camilo</h2>
+        <p>Jueves, 26 septiembre 2024</p>
+      </div>
+      <div class="user-avatar">CC</div>
+    </div>
+  </header>
 
-    <main>
-        <button class="add-appointment-button">Agendar cita</button>
-        <table>
-            <thead>
-                <tr>
-                    <th>Fecha</th>
-                    <th>Hora</th>
-                    <th>Especialidad</th>
-                    <th>Doctor</th>
-                    <th>Lugar</th>
-                    <th>Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>16 septiembre del 2024</td>
-                    <td>10:00 am</td>
-                    <td>Medicina general</td>
-                    <td>Raul Sanchez</td>
-                    <td>Los Nogales</td>
-                    <td><button class="button-primary">Modificar</button></td>
-                    <td><button class="button-secondary">Cancelar</button></td>
-                </tr>
-                <tr>
-                    <td>23 septiembre del 2024</td>
-                    <td>3:00 pm</td>
-                    <td>Cardiologia</td>
-                    <td>Sandra palacios</td>
-                    <td>Calle 50</td>
-                    <td><button class="button-primary">Modificar</button></td>
-                    <td><button class="button-secondary">Cancelar</button></td>
-                </tr>
-                <tr>
-                    <td>3 octubre del 2024</td>
-                    <td>4:30 pm</td>
-                    <td>Odontologia</td>
-                    <td>Paula Suarez</td>
-                    <td>Los Nogales</td>
-                    <td><button class="button-primary">Modificar</button></td>
-                    <td><button class="button-secondary">Cancelar</button></td>
-                </tr>
-                <tr>
-                    <td>10 octubre del 2024</td>
-                    <td>11:00 am</td>
-                    <td>Medicina general</td>
-                    <td>Raul Sanchez</td>
-                    <td>Los Nogales</td>
-                    <td><button class="button-primary">Modificar</button></td>
-                    <td><button class="button-secondary">Cancelar</button></td>
-                </tr>
-                <tr>
-                    <td>23 octubre del 2024</td>
-                    <td>10:00 am</td>
-                    <td>Dermatologia</td>
-                    <td>Santiago Silva</td>
-                    <td>Los Nogales</td>
-                    <td><button class="button-primary">Modificar</button></td>
-                    <td><button class="button-secondary">Cancelar</button></td>
-                </tr>
-                <tr>
-                    <td>6 noviembre del 2024</td>
-                    <td>10:00 am</td>
-                    <td>Medicina general</td>
-                    <td>Raul Suarez</td>
-                    <td>Los Nogales</td>
-                    <td><button class="button-primary">Modificar</button></td>
-                    <td><button class="button-secondary">Cancelar</button></td>
-                </tr>
-                <tr>
-                    <td>7 noviembre del 2024</td>
-                    <td>9:30 am</td>
-                    <td>Medicina interna</td>
-                    <td>Laura Vargas</td>
-                    <td>Calle 100</td>
-                    <td><button class="button-primary">Modificar</button></td>
-                    <td><button class="button-secondary">Cancelar</button></td>
-                </tr>
-            </tbody>
-        </table>
-    </main>
+  <main>
+    <button onclick="abrirModal('formAgendar')">Agendar cita</button>
+    <table>
+      <thead>
+        <tr>
+          <th>Lugar</th>
+          <th>Fecha</th>
+          <th>Especialidad</th>
+          <th>Doctor</th>
+          <th>Hora</th>
+          <th>Opciones</th>
+        </tr>
+      </thead>
+      <tbody id="tablaCitas"></tbody>
+    </table>
+  </main>
+
+  <!-- Modal Agendar -->
+  <div id="formAgendar" class="modal">
+    <div class="modal-content">
+      <h3>Agendar cita</h3>
+      <p>En esta sección podrás asignar tu cita médica con nuestros especialistas.</p>
+      <div class="form-group">
+        <label>Sede</label>
+        <select id="sede">
+          <option>Los Nogales</option>
+          <option>Calle 100</option>
+          <option>Chapinero</option>
+          <option>Sur</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Fecha</label><input type="date" id="fecha">
+      </div>
+      <div class="form-group">
+        <label>Especialidad</label>
+        <select id="especialidad">
+          <option>Cardiología</option>
+          <option>Medicina general</option>
+          <option>Dermatología</option>
+          <option>Oftalmología</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Especialista</label>
+        <select id="especialista">
+          <option>Sandra Palacios</option>
+          <option>Paula Suarez</option>
+          <option>Raul Sanchez</option>
+          <option>Santiago Silva</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Hora</label><input type="time" id="hora">
+      </div>
+      <div class="button-group">
+        <button onclick="cerrarModal('formAgendar')">Cancelar</button>
+        <button onclick="agendarCita()">Agendar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Modificar -->
+  <div id="formModificar" class="modal">
+    <div class="modal-content">
+      <h3>Modificar cita</h3>
+      <p>En esta sección podrás modificar tu cita medica con nuestros especialistas</p>
+      <div class="form-group">
+        <label>Sede</label>
+        <select id="editSede">
+          <option>Los Nogales</option>
+          <option>Calle 100</option>
+          <option>Chapinero</option>
+          <option>Sur</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Fecha</label><input type="date" id="editFecha">
+      </div>
+      <div class="form-group">
+        <label>Especialidad</label>
+        <select id="editEspecialidad">
+          <option>Cardiología</option>
+          <option>Medicina general</option>
+          <option>Dermatología</option>
+          <option>Oftalmología</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Especialista</label>
+        <select id="editEspecialista">
+          <option>Sandra Palacios</option>
+          <option>Paula Suarez</option>
+          <option>Raul Sanchez</option>
+          <option>Santiago Silva</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Hora</label><input type="time" id="editHora">
+      </div>
+      <div class="button-group">
+        <button onclick="cerrarModal('formModificar')">Cancelar</button>
+        <button onclick="guardarCambios()">Modificar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Cancelar -->
+  <div id="modalCancelar" class="modal">
+    <div class="modal-content">
+      <p>¿Estás seguro de cancelar esta cita?</p>
+      <div class="button-group">
+        <button onclick="cerrarModal('modalCancelar')">Eliminar</button>
+        <button onclick="confirmarCancelacion()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let citas = [];
+    let indexModificar = null;
+    let indexEliminar = null;
+
+    function abrirModal(id) {
+      document.getElementById(id).style.display = 'flex';
+    }
+    function cerrarModal(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+
+    function agendarCita() {
+      const cita = {
+        sede: document.getElementById('sede').value,
+        fecha: document.getElementById('fecha').value,
+        especialidad: document.getElementById('especialidad').value,
+        especialista: document.getElementById('especialista').value,
+        hora: document.getElementById('hora').value,
+      };
+      citas.push(cita);
+      renderTabla();
+      cerrarModal('formAgendar');
+    }
+
+    function renderTabla() {
+      const tabla = document.getElementById('tablaCitas');
+      tabla.innerHTML = '';
+      citas.forEach((cita, i) => {
+        tabla.innerHTML += `
+        <tr>
+          <td>${cita.sede}</td>
+          <td>${cita.fecha}</td>
+          <td>${cita.especialidad}</td>
+          <td>${cita.especialista}</td>
+          <td>${cita.hora}</td>
+          <td>
+            <button onclick="editarCita(${i})">Modificar</button>
+            <button onclick="cancelarCita(${i})">Cancelar</button>
+          </td>
+        </tr>`;
+      });
+    }
+
+    function editarCita(index) {
+      indexModificar = index;
+      const cita = citas[index];
+      document.getElementById('editSede').value = cita.sede;
+      document.getElementById('editFecha').value = cita.fecha;
+      document.getElementById('editEspecialidad').value = cita.especialidad;
+      document.getElementById('editEspecialista').value = cita.especialista;
+      document.getElementById('editHora').value = cita.hora;
+      abrirModal('formModificar');
+    }
+
+    function guardarCambios() {
+      citas[indexModificar] = {
+        sede: document.getElementById('editSede').value,
+        fecha: document.getElementById('editFecha').value,
+        especialidad: document.getElementById('editEspecialidad').value,
+        especialista: document.getElementById('editEspecialista').value,
+        hora: document.getElementById('editHora').value, 
+      };
+      renderTabla();
+      cerrarModal('formModificar');
+    }
+
+    function cancelarCita(index) {
+      indexEliminar = index;
+      abrirModal('modalCancelar');
+    }
+
+    function confirmarCancelacion() {
+      citas.splice(indexEliminar, 1);
+      renderTabla();
+      cerrarModal('modalCancelar');
+    }
+  </script>
 </body>
 </html>
+
+  
