@@ -1,96 +1,255 @@
-body{ 
-    font-family: sans-serif;
-    margin: 20px;
-    background-color: #f4f4f4;
+/* Fondo general */
+body {
+  margin: 0;
+  background-color: #f1dfdb;
+  padding: 0;
+  font-family: poppins, sans-serif;
 }
 
-header{
-    background-color: #fff;
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px  4px  rgba(0, 0, 0, 0.1);
-
+#main {
+  display: flex;
 }
 
-.header-left h1 {
-    margin: 0 0 5px 0;
-    font-size: 24px;
-    color: #333;
+#container-history {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-.header-left .date {
-    margin: 0;
-    color: #777;
-    font-size: 14px;    
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white; /* Fondo blanco */
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.header-right button {
-    padding: 10px  15px;
-    margin-left: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
+.header-content {
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  margin: 0;
+  font-size: 24px;
+  color: #3e435d; /* Color para "Bienvenido, Camilo" */
+}
+
+p {
+  margin: 10px 0 0 0; /* Aumentar margen superior para más separación */
+  font-size: 16px;
+  color: #7d7a7a; /* Color para "Jueves, 26 septiembre 2024" */
+}
+
+.buttons-container {
+  display: flex;
+  gap: 10px;
 }
 
 .notification-button {
-    background-color: #eee;
-    color: #333;
+  background-color: #d3dfea; /* Fondo gris claro */
+  border: none; /* Sin borde */
+  border-radius: 12px; /* Bordes redondeados */
+  cursor: pointer;
+  padding: 10px; /* Espaciado interno */
+  width: 50px; /* Ancho ajustado */
+  height: 50px; /* Altura ajustada */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+  transition: background-color 0.3s; /* Para un efecto suave al pasar el mouse */
 }
 
-.cc-button {
-    background-color: #007bff;
-    color: white;
+.notification-button:hover {
+  background-color: #c0e0f7; /* Cambia el color al pasar el mouse */
 }
 
+.notification-button svg {
+  width: 24px; /* Ajustar tamaño del icono */
+  height: 24px; /* Ajustar tamaño del icono */
+}
+
+.profile-button {
+  background-color: #6482ad; /* Fondo azul para el botón CC */
+  color: white;
+  border: none;
+  border-radius: 50%; /* Hacer el botón circular */
+  cursor: pointer;
+  padding: 10px;
+  width: 50px; /* Ancho fijo para asegurar forma circular */
+  height: 50px; /* Altura fija para asegurar forma circular */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Encabezado */
+.header {
+  background-color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-text h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.welcome-text p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* Avatar del usuario */
+.user-avatar {
+  background-color: #3b5998;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+/* Contenido principal */
 main {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px  4px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
 }
 
-.add-appointment-button {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 10px  20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-bottom: 20px;
+/* Botón principal */
+main > button {
+  background-color: #3b5998;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 2rem;
 }
 
+main > button:hover {
+  background-color: #334d84;
+}
+
+/* Tabla de citas */
 table {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-th,td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
+th, td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
 }
 
 th {
-    background-color: f0f0f0;
-    font-weight: bold;
+  background-color: #f9f9f9;
+  font-weight: bold;
+  color: #555;
 }
 
-.modify-button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 8px  12px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
+tbody tr:hover {
+  background-color: #f1f1f1;
 }
 
-.modify-button:hover {
-    background-color: #0056b3;
+/* Botones en tabla */
+td button {
+  margin-right: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+/* Botón Modificar */
+td button:first-child {
+  background-color: #3b5998;
+  color: white;
+}
+
+td button:first-child:hover {
+  background-color: #3b5998;
+}
+
+/* Botón Cancelar */
+td button:last-child {
+  background-color: #d9534f;
+  color: #f8d7da;
+  border: 1px solid #d9534f;
+}
+
+td button:last-child:hover {
+  background-color: #f1b0b7;
+}
+
+/* Modal */
+.modal-content h3 {
+  margin-top: 0;
+  color: #3b5998;
+}
+
+.modal-content p {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* Grupos de botones en formularios */
+.button-group button {
+  flex: 1;
+  margin: 0.5rem 0.2rem;
+  padding: 0.7rem;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.button-group button:first-child {
+  background-color: #f8d7da;
+  color: #d9534f;
+}
+
+.button-group button:first-child:hover {
+  background-color: #f1b0b7;
+}
+
+.button-group button:last-child {
+  background-color: #3b5998;
+  color: white;
+}
+
+.button-group button:last-child:hover {
+  background-color: #334d84;
+}
+
+/* Inputs y selects en formularios */
+input, select {
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  padding: 0.5rem;
+}
+
+input:focus, select:focus {
+  border-color: #3b5998;
+  outline: none;
 }
