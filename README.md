@@ -1,3 +1,6 @@
 # InfoSalud
 
-Al iniciar sesión se debe crear la cuenta como primer paso para poder navegar en la plataforma
+Al iniciar sesión se debe usar las sigueinets credenciales:
+
+- Correo: admin@yopmail.com
+- Contraseña: Pass123*
