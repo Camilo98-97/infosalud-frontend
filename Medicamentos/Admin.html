@@ -6,90 +6,115 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin</title>
   <link rel="stylesheet" href="style.css">
-
+  <link rel="stylesheet" href="../menu/styleMenu.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <link rel="icon" type="image/png" href="/assets/favicon/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg" />
+  <link rel="shortcut icon" href="/assets/favicon/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png" />
+  <link rel="manifest" href="/assets/favicon/site.webmanifest" />
 </head>
 
 <body>
+  <div id="main">
+    <div id="menu-container"></div>
+    <div id="container-history">
+      <header>
+        <div class="header-content">
+          <h1>Bienvenido, Camilo</h1>
+          <p id="current-date"></p>
+        </div>
+        <div class="buttons-container">
+          <button class="notification-button">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6482AD"
+              class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+            </svg>
+          </button>
+          <button class="profile-button">CC</button>
+        </div>
+      </header>
 
-  <div class="header">
-    <div class="welcome-text">
-      <h2>Bienvenido, Camilo</h2>
-      <p>Jueves, 26 septiembre 2024</p>
+      <div class="contenido"> <!-- Contenedor principal del contenido -->
+        <!-- Tabla de medicamentos -->
+        <table>
+          <thead>
+            <tr>
+              <th>Referencia</th>
+              <th>Nombre de Medicamento</th>
+              <th>Cantidad</th>
+              <th>Estado</th>
+              <th>Opciones</th>
+            </tr>
+          </thead>
+          <tbody id="medicamentos"> <!-- Filas de medicamentos con botones de acción -->
+            <tr>
+              <td>369857412</td>
+              <td>Omeprazol</td>
+              <td>5</td>
+              <td class="estado">En proceso</td>
+              <td class="opciones">
+                <button class="btn-aprobar">Aprobar</button>
+                <button class="btn-entregar">Entregar</button>
+                <button class="btn-denegar">Denegado</button>
+              </td>
+            </tr>
+            <tr>
+              <td>400569871</td>
+              <td>Acetaminofén</td>
+              <td>10</td>
+              <td class="estado">En proceso</td>
+              <td class="opciones">
+                <button class="btn-aprobar">Aprobar</button>
+                <button class="btn-entregar">Entregar</button>
+                <button class="btn-denegar">Denegado</button>
+              </td>
+            </tr>
+            <tr>
+              <td>403568712</td>
+              <td>Vitamina C</td>
+              <td>3</td>
+              <td class="estado">En proceso</td>
+              <td class="opciones">
+                <button class="btn-aprobar">Aprobar</button>
+                <button class="btn-entregar">Entregar</button>
+                <button class="btn-denegar">Denegado</button>
+              </td>
+            </tr>
+          </tbody>
+          
+          <!-- Pie de tabla con controles de paginación -->
+          <tfoot>
+            <tr>
+              <td colspan="5">
+                <div class="pagination-container">
+                  <span>Items per page:</span>
+                  <select>
+                    <option>5</option>
+                    <option>10</option>
+                    <option>25</option>
+                    <option>50</option>
+                  </select>
+    
+                  <span class="pagination-info">1 of 50</span>
+    
+                  <button class="pagination-button">‹</button>
+                  <button class="pagination-button">›</button>
+                </div>
+              </td>
+            </tr>
+          </tfoot>
+    
+        </table>
+      </div>
     </div>
-    <div class="user-avatar">CC</div>
   </div>
-
-  <div class="contenido">
-    <table>
-      <thead>
-        <tr>
-          <th>Referencia</th>
-          <th>Nombre de Medicamento</th>
-          <th>Cantidad</th>
-          <th>Estado</th>
-          <th>Opciones</th>
-        </tr>
-      </thead>
-      <tbody id="medicamentos">
-        <tr>
-          <td>369857412</td>
-          <td>Omeprazol</td>
-          <td>5</td>
-          <td class="estado">En proceso</td>
-          <td class="opciones">
-            <button class="btn-aprobar">Aprobar</button>
-            <button class="btn-entregar">Entregar</button>
-            <button class="btn-denegar">Denegado</button>
-          </td>
-        </tr>
-        <tr>
-          <td>400569871</td>
-          <td>Acetaminofén</td>
-          <td>10</td>
-          <td class="estado">En proceso</td>
-          <td class="opciones">
-            <button class="btn-aprobar">Aprobar</button>
-            <button class="btn-entregar">Entregar</button>
-            <button class="btn-denegar">Denegado</button>
-          </td>
-        </tr>
-        <tr>
-          <td>403568712</td>
-          <td>Vitamina C</td>
-          <td>3</td>
-          <td class="estado">En proceso</td>
-          <td class="opciones">
-            <button class="btn-aprobar">Aprobar</button>
-            <button class="btn-entregar">Entregar</button>
-            <button class="btn-denegar">Denegado</button>
-          </td>
-        </tr>
-      </tbody>
-
-      <tfoot>
-        <tr>
-          <td colspan="5">
-            <div class="pagination-container">
-              <span>Items per page:</span>
-              <select>
-                <option>5</option>
-                <option>10</option>
-                <option>25</option>
-                <option>50</option>
-              </select>
-
-              <span class="pagination-info">1 of 50</span>
-
-              <button class="pagination-button">‹</button>
-              <button class="pagination-button">›</button>
-            </div>
-          </td>
-        </tr>
-      </tfoot>
-
-    </table>
-  </div>
-  <div id="modalConfirmacion" class="modal">
+  <div id="modalConfirmacion" class="modal"> <!-- Modal de confirmación de acción -->
     <div class="modal-content">
       <div class="info-circle">
         <span>i</span>
@@ -104,16 +129,20 @@
 
 
   <script>
+    // Función para agregar un nuevo medicamento manualmente
     function solicitarMedicamento() {
       const tbody = document.getElementById("medicamentos");
 
+      // Genera un código aleatorio
       const codigo = Math.floor(100000000 + Math.random() * 900000000);
       const nombre = prompt("Nombre del medicamento:");
       const cantidad = prompt("Cantidad:");
       const estado = "En proceso";
 
+      // Si no se ingresan datos, no se agrega
       if (!nombre || !cantidad) return;
 
+      // Crear una nueva fila con los datos
       const nuevaFila = document.createElement("tr");
 
       nuevaFila.innerHTML = `
@@ -130,11 +159,12 @@
 
       tbody.appendChild(nuevaFila);
     }
-
+  
+    // Variables globales para el modal
     let accionActual = ""; 
     let botonAccionado = null; 
 
-    
+     // Mostrar el modal con el mensaje personalizado
     function mostrarModal(accion, boton) {
       accionActual = accion;
       botonAccionado = boton;
@@ -148,14 +178,16 @@
       modal.style.display = "flex";
     }
 
-    
+    // Cierra el modal
     function cerrarModal() {
       const modal = document.getElementById("modalConfirmacion");
       modal.style.display = "none";
     }
 
+    // Ejecuta una vez el documento esté cargado
     document.addEventListener("DOMContentLoaded", function () {
-      
+
+      // Agrega evento a todos los botones de acción
       document.querySelectorAll(".btn-aprobar, .btn-entregar, .btn-denegar").forEach((boton) => {
         boton.addEventListener("click", function () {
           const clase = this.classList;
@@ -165,13 +197,14 @@
         });
       });
 
+      // Evento cuando se confirma una acción en el modal
       document.getElementById("btnConfirmarAccion").addEventListener("click", function () {
         if (botonAccionado) {
           const fila = botonAccionado.closest("tr");
           const estadoCelda = fila.querySelector(".estado");
           const opcionesCelda = fila.querySelector(".opciones");
 
-          
+          // Actualiza el estado según la acción realizada
           let estadoFormateado = "";
           if (accionActual === "Aprobar") {
             estadoFormateado = "Aprobado";
@@ -182,14 +215,13 @@
           }
           estadoCelda.textContent = estadoFormateado;
 
-          
+          // Elimina botones antiguos y agrega uno deshabilitado con la acción realizada
           opcionesCelda.innerHTML = "";
-
-          
           const boton = document.createElement("button");
           boton.textContent = accionActual;
           boton.disabled = true;
 
+          // Asigna clase correspondiente al nuevo botón
           if (accionActual === "Aprobar") {
             boton.className = "btn-aprobar";
           } else if (accionActual === "Entregar") {
@@ -201,12 +233,23 @@
           opcionesCelda.appendChild(boton);
         }
 
-        cerrarModal();
+        cerrarModal(); // Oculta el modal después de confirmar
 
       });
     });
+    document.getElementById("btnCancelarModal").addEventListener("click", cerrarModal); // Cierra el modal al hacer clic en cancelar
 
+    fetch('../menu/menu.html')
+      .then(res => res.text())
+      .then(html => document.getElementById('menu-container').innerHTML = html);
 
+    const formatDateToSpanish = (date) => {
+      const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+      return date.toLocaleDateString('es-ES', options);
+    };
+
+    const currentDate = new Date();
+    document.getElementById('current-date').textContent = formatDateToSpanish(currentDate);
   </script>
 
 </body>
